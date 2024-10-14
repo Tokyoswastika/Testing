@@ -3,39 +3,46 @@ package edu.cs.lab4crud.controller;
 import edu.cs.lab4crud.model.Phone;
 import edu.cs.lab4crud.service.PhoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/phones/")
+@RequestMapping("/api/v1/phones")
 @RequiredArgsConstructor
 public class PhoneRestController {
+
     private final PhoneService phoneService;
 
     @GetMapping
-    public List<Phone> getAll() {
-        return phoneService.getAll();
+    public ResponseEntity<List<Phone>> getAllPhones() {
+        List<Phone> phones = phoneService.getAll();
+        return ResponseEntity.ok(phones);
     }
 
-    @GetMapping("{id}")
-    public Phone showOneById(@PathVariable String id) {
-        return phoneService.getById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Phone> getPhoneById(@PathVariable String id) {
+        Phone phone = phoneService.getById(id);
+        return phone != null ? ResponseEntity.ok(phone) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public Phone insert(@RequestBody Phone phone) {
-        return phoneService.create(phone);
+    public ResponseEntity<Phone> createPhone(@RequestBody Phone phone) {
+        Phone createdPhone = phoneService.create(phone);
+        return ResponseEntity.status(201).body(createdPhone);
     }
 
-    @PutMapping("{id}")
-    public Phone edit(@PathVariable String id, @RequestBody Phone phone) {
-        phone.setId(id); // Ensure the ID in the path matches the Phone object
-        return phoneService.update(phone);
+    @PutMapping("/{id}")
+    public ResponseEntity<Phone> updatePhone(@PathVariable String id, @RequestBody Phone phone) {
+        phone.setId(id);
+        Phone updatedPhone = phoneService.update(phone);
+        return updatedPhone != null ? ResponseEntity.ok(updatedPhone) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePhone(@PathVariable String id) {
         phoneService.delById(id);
+        return ResponseEntity.noContent().build();
     }
 }
