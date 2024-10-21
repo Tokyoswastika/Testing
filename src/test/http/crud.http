@@ -12,11 +12,11 @@ POST http://localhost:8080/api/v1/meals/
 Content-Type: application/json
 
 {
-  "name": "newFood",
-  "code": "000000",
-  "description": "description-food",
-  "calories": 555,
-  "price": 10.5
+  "name": "newPhone",
+  "code": "PH0000",
+  "description": "Latest smartphone with advanced features",
+  "batteryLife": 24,
+  "price": 699.99
 }
 
 #### Update
@@ -25,9 +25,9 @@ Content-Type: application/json
 
 {
   "id": "4",
-  "name": "nameUpdated",
-  "code": "000005",
-  "description": "description-new",
-  "calories": 0,
-  "price": 999
+  "name": "updatedPhone",
+  "code": "PH0005",
+  "description": "Updated version with improved camera",
+  "batteryLife": 30,
+  "price": 799.99
 }
